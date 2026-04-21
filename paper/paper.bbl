@@ -1,0 +1,78 @@
+\begin{thebibliography}{10}
+
+\bibitem{cycle2024}
+Cycle: Learning to self-refine the code generation.
+\newblock In {\em Proceedings of the Association for Computing Machinery on Object-Oriented Programming, Systems, Languages, and Applications (OOPSLA)}, 2024.
+
+\bibitem{aflow2025}
+{Anonymous}.
+\newblock Aflow: Automating agentic workflow generation.
+\newblock {\em International Conference on Learning Representations (ICLR)}, 2025.
+
+\bibitem{evoflow2025}
+{Anonymous}.
+\newblock Evoflow: Evolving diverse agentic workflows on the fly.
+\newblock {\em arXiv preprint arXiv:2502.07373}, 2025.
+
+\bibitem{cse2026}
+{Anonymous}.
+\newblock Controlled self-evolution for algorithmic code optimization.
+\newblock {\em arXiv preprint arXiv:2601.07348}, 2026.
+
+\bibitem{mbpp2021}
+Jacob Austin, Augustus Odena, Maxwell Nye, Maarten Bosma, Henryk Michalewski, David Dohan, Ellen Jiang, Carrie Cai, Michael Terry, Quoc Le, et~al.
+\newblock Program synthesis with large language models.
+\newblock {\em arXiv preprint arXiv:2108.07732}, 2021.
+
+\bibitem{frugalgpt2023}
+Lingjiao Chen, Matei Zaharia, and James Zou.
+\newblock Frugalgpt: How to use large language models while reducing cost and improving performance.
+\newblock {\em arXiv preprint arXiv:2305.05176}, 2023.
+
+\bibitem{humaneval2021}
+Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique Ponde de~Oliveira Pinto, Jared Kaplan, Harri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, et~al.
+\newblock Evaluating large language models trained on code.
+\newblock {\em arXiv preprint arXiv:2107.03374}, 2021.
+
+\bibitem{dspy2023}
+Omar Khattab et~al.
+\newblock Dspy: Compiling declarative language model calls into self-improving pipelines.
+\newblock {\em arXiv preprint arXiv:2310.03714}, 2023.
+
+\bibitem{selfmoa2025}
+Wenzhe Li, Zhibin Zhang, Zhibin Zhang, et~al.
+\newblock Is mixing different large language models beneficial?
+\newblock {\em arXiv preprint arXiv:2502.00674}, 2025.
+\newblock Introduces Self-MoA: outperforms MoA by 6.6\% on AlpacaEval 2.0 and 3.8\% avg. on MMLU/CRUX/MATH.
+
+\bibitem{learnabilitygap2025}
+Yuetai Li, Xiang Yue, Zhangchen Xu, Fengqing Jiang, Luyao Niu, Bill~Yuchen Lin, and Bhaskar Ramasubramanian.
+\newblock Small models struggle to learn from strong reasoners.
+\newblock In {\em Findings of the Association for Computational Linguistics: ACL 2025}, 2025.
+
+\bibitem{ea4llm2025}
+WenTao Liu, Siyu Song, Hao Hao, and Aimin Zhou.
+\newblock Ea4llm: A gradient-free approach to large language model optimization via evolutionary algorithms.
+\newblock {\em arXiv preprint arXiv:2510.10603}, 2025.
+
+\bibitem{neat2002}
+Kenneth~O Stanley and Risto Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock {\em Evolutionary Computation}, 10(2):99--127, 2002.
+
+\bibitem{moa2024}
+Junlin Wang, Jue Wang, Ben Athiwaratkun, Ce~Zhang, and James Zou.
+\newblock Mixture-of-agents enhances large language model capabilities.
+\newblock 2024.
+
+\bibitem{agentconductor2026}
+Siyu Wang et~al.
+\newblock Agentconductor: Topology evolution for multi-agent competition-level code generation.
+\newblock {\em arXiv preprint arXiv:2602.17100}, 2026.
+
+\bibitem{evoprompt2023}
+Weixiao Zhong, Liang Cui, Shu Liang, Shu Zhang, Chenyang Li, Yue Liu, Xing Miao, Shuming Wang, and Qiang Liu.
+\newblock Evoprompt: Connecting llms with evolutionary algorithms yields powerful prompt optimizers.
+\newblock {\em arXiv preprint arXiv:2309.08532}, 2023.
+
+\end{thebibliography}
