@@ -2,6 +2,14 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage{xurl}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{makecell}
+\usepackage{seqsplit}
+
+\tolerance=1000
+\emergencystretch=1em
 
 \title{Feedback Over Form: Why Execution Feedback Matters More Than Pipeline Topology in 1-3B Code Generation}
 \author{Charles Junichi McAndrews}
@@ -147,7 +155,7 @@ We found that self-refinement with execution feedback significantly improved cod
 \centering
 \caption{Main results across all configurations and benchmarks. All numbers are 5-run means $\pm$ standard deviation.}
 \label{tab:main-results}
-\begin{tabular}{lcc}
+\begin{tabularx}{\linewidth}{Xcc}
 \hline
 \textbf{Configuration} & \textbf{HumanEval (164)} & \textbf{MBPP (427)} \\
 \hline
@@ -158,7 +166,7 @@ NEAT champion & 98.2 $\pm$ 3.4 (59.9\%) & N/A \\
 qwen2.5-coder:3B solo & 133.6 $\pm$ 3.4 (81.5\%) & 295.4 $\pm$ 5.4 (69.2\%) \\
 qwen2.5-coder:3B self-refine & 139.6 $\pm$ 2.5 (85.1\%) & 307.2 $\pm$ 4.3 (71.9\%) \\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 The NEAT champion was not separately evaluated on MBPP. We did not extend that configuration beyond HumanEval because its advantage over the simpler manual baseline on HumanEval was not statistically significant.
@@ -167,7 +175,7 @@ The NEAT champion was not separately evaluated on MBPP. We did not extend that c
 \centering
 \caption{Statistical significance of key comparisons. $\sigma$ denotes separation in standard deviations between configuration means.}
 \label{tab:significance}
-\begin{tabular}{lccc}
+\begin{tabularx}{\linewidth}{>{\RaggedRight\arraybackslash}Xccc}
 \hline
 \textbf{Comparison} & \textbf{HumanEval} & \textbf{MBPP} & \textbf{Verdict} \\
 \hline
@@ -177,7 +185,7 @@ Coder self-refine vs coder solo & +6.0 (1.4$\sigma$) & +11.8 (1.7$\sigma$) & Sug
 Coder self-refine vs best llama & +45.6 (12.4$\sigma$) & +20.2 (4.2$\sigma$) & Significant \\
 NEAT champion vs manual best & +4.2 (1.0$\sigma$) & N/A & Not significant \\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{Generator vs. Refiner Role}
@@ -197,16 +205,19 @@ The tracebacks provided by the executor give unambiguous signal for runtime erro
 \centering
 \caption{Error taxonomy with fix-rate ranges by error type across both benchmarks; ranges reflect variation across tested configurations, and rare categories should be interpreted cautiously.}
 \label{tab:error-taxonomy}
-\begin{tabular}{lccc}
+\begin{tabularx}{\linewidth}{>{\RaggedRight\arraybackslash}Xcc>{\RaggedRight\arraybackslash}X}
 \hline
-\textbf{Error Type} & \textbf{HumanEval Fix Rate} & \textbf{MBPP Fix Rate} & \textbf{Pattern} \\
+\textbf{Error Type} & 
+\makecell{\textbf{HumanEval}\\\textbf{Fix Rate}} & 
+\makecell{\textbf{MBPP}\\\textbf{Fix Rate}} & 
+\textbf{Pattern} \\
 \hline
 NameError & 50--67\% & 25--55\% & Most fixable \\
 SyntaxError & 100\% & 40\% & Fixable (small n) \\
 TypeError & 33--67\% & 22--67\% & Middle tier \\
 AssertionError & 4--24\% & 7--35\% & Mostly unfixable \\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{Early Stopping Prevents Regressions}
@@ -275,25 +286,34 @@ Table~\ref{tab:neat-runs} summarizes the completed evolutionary search runs. Acr
 
 The completed runs also show that evolutionary search mostly rediscovered human-designed configurations. Run v2 converged to the same llama3.2:3B self-refinement pattern as the manual baseline and matched it almost exactly after 5-run validation: $93.8 \pm 3.3$ versus $94.0 \pm 2.7$. The deterministic search run also converged to the same simple generator $\rightarrow$ executor $\rightarrow$ refiner loop, but with fewer iterations and lower validated performance. Across these runs, evolution confirmed that simple refinement loops are competitive, but did not show a clearly significant advantage for more complex topologies.
 
-The run summaries also reinforce the evaluation-noise story. Among the completed stochastic runs, v3 had the lower best search-time score (21/25) but the stronger full-benchmark validation (106/164 single-run; $98.2 \pm 3.4$ across 5 runs). By contrast, v2 looked better during search (22/25) but validated slightly worse. Search-time fitness was therefore useful for within-run selection, but not a reliable proxy for final quality across runs.
+The run summaries also reinforce the evaluation-noise story. Among the completed stochastic runs, v3 had the worse search-time score (21/25) but the stronger full-benchmark validation (106/164 single-run; $98.2 \pm 3.4$ across 5 runs). By contrast, v2 looked better during search (22/25) but validated slightly worse. Search-time fitness was therefore useful for within-run selection, but not a reliable proxy for final quality across runs. In Table~\ref{tab:neat-runs}, L3.2-3B denotes llama3.2:3B and Q2.5-1.5B denotes qwen2.5:1.5B.
 
 \begin{table}[t]
 \centering
-\caption{Completed NEAT-inspired search runs on HumanEval. All runs used population 20, 25/164 problems per generation, and parsimony pressure of 0.02 per node. Search-time fitness is the best score seen on that run's 25-problem generation sample and is not directly comparable to full-set validation. All 5-run validations used the full 164-problem benchmark, allowing search-time and validated performance to be compared directly across runs.}
+\caption{Completed NEAT-inspired search runs on HumanEval. All 5-run validations used the full 164-problem benchmark.}
 \label{tab:neat-runs}
 \small
-\begin{tabular}{@{}lccccccc@{}}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}lccXcccl@{}}
 \toprule
-\textbf{Run} & \textbf{Eval} & \textbf{Stratified} & \textbf{Champion topology} & \textbf{Iters} & \textbf{Search best} & \textbf{Full 164} & \textbf{5-run val.} \\
+\textbf{Run} & \textbf{Eval} & \textbf{Strat.} & \textbf{Topology} & \textbf{Itrs} & \textbf{Search best} & \textbf{Full 164} & \textbf{5-run val.} \\
 \midrule
-v2 & Stochastic & No  & gen(llama3.2:3B) $\rightarrow$ exec $\rightarrow$ ref(llama3.2:3B) & 2 & 0.82 (22/25) & 99/164 & $93.8 \pm 3.3$ \\
-v3 & Stochastic & Yes & gen(qwen2.5:1.5B) $\rightarrow$ exec $\rightarrow$ ana(llama3.2:3B) $\rightarrow$ ref(llama3.2:3B) & 3 & 0.76 (21/25) & 106/164 & $98.2 \pm 3.4$ \\
-temp0 & Deterministic & Yes & gen(qwen2.5:1.5B) $\rightarrow$ exec $\rightarrow$ ref(llama3.2:3B) & 1 & 0.66 & 96/164 @ $T{=}0$ & $89.8 \pm 5.2^{a}$ \\
-\bottomrule
-\end{tabular}
+v2 & Stoch. & No &
+gen(L3.2-3B) \newline $\rightarrow$ exec \newline $\rightarrow$ ref(L3.2-3B)
+& 2 & 0.82 & 99/164 & $93.8 \pm 3.3$ \\
 
-\vspace{2mm}
-\footnotesize{$^{a}$ The temp0 run used deterministic search ($T{=}0$), but 5-run validation was performed at the evolved temperatures rather than at $T{=}0$. A preliminary stochastic run was terminated before completion due to complexity growth and is treated as a preliminary failure case rather than a completed run.}
+v3 & Stoch. & Yes &
+gen(Q2.5-1.5B) \newline $\rightarrow$ exec \newline $\rightarrow$ ana(L3.2-3B) \newline $\rightarrow$ ref(L3.2-3B)
+& 3 & 0.76 & 106/164 & $98.2 \pm 3.4$ \\
+
+temp0 & Det. & Yes &
+gen(Q2.5-1.5B) \newline $\rightarrow$ exec \newline $\rightarrow$ ref(L3.2-3B)
+& 1 & 0.66 & 96/164 & $89.8 \pm 5.2^{a}$ \\
+\bottomrule
+\end{tabularx}
+
+\vspace{1mm}
+\footnotesize{$^{a}$ Search used deterministic decoding ($T{=}0$), but 5-run validation used the evolved temperatures. Search-time scores were measured on 25-problem generation samples. L3.2-3B denotes llama3.2:3B and Q2.5-1.5B denotes qwen2.5:1.5B. A preliminary stochastic run was terminated early due to complexity growth and is excluded from the completed runs.}
 \end{table}
 
 \subsection{Evaluation Noise}
@@ -325,7 +345,7 @@ On HumanEval, 7 of 164 problems were never solved by any tested configuration ac
 The tracebacks provided an unambiguous signal for runtime errors: "variable Foo not define on line 12" tells the refiner (or analyzer if available) exactly what to fix. However, for the logic errors (AssertionErrors), tracebacks could only provide the symptoms: "expected 5, got 3". The refiner knows that the output is wrong, but is not told explicitly why. This explains the error taxonomy results: high fix rates for NameError/SyntaxError, but low fix rates for AssertionError. Even though the mechanism is narrow, the effect is large. Our results support a simple mechanism: refinement helps when the feedback is explicit, local, and machine-checkable. It helps much less when the signal only says the answer is wrong.
 
 \subsection{Practical Recommendations}
-For small-model code generation, use a refinement pipeline when you have an execution oracle such as tests, a compiler, or a validator. In our setup, 1 refinement step was enough for the coder model, while up to 3 helped weaker general-purpose pipelines. Always use early stopping. Without it, refinement was net-negative. Within the model pool we tested, investing in the refiner mattered more than investing in the generator. 
+For small-model code generation, use a refinement pipeline when you have an execution oracle such as tests, a compiler, or a validator. In our setup, one refinement step was enough for the coder model, while up to 3 helped weaker general-purpose pipelines. Always use early stopping. Without it, refinement was net-negative. Within the model pool we tested, investing in the refiner mattered more than investing in the generator. Code for the experimental framework and evaluation pipeline is available at \url{https://github.com/L3G/feedback-over-form}.
 
 \subsection{Negative Results: Text Pipelines}
 We also ran exploratory text-only pipeline experiments before focusing on code. These experiments did not show evidence that composition helped without external verification, but we do not treat them as a main contribution of this paper because they were not evaluated as systematically as the code results. We include them as supporting context for why execution feedback became the focus.

@@ -9,3 +9,11 @@ results/*.log
 dist/
 build/
 .venv/
+
+# LaTeX build artifacts
+*.aux
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.out
