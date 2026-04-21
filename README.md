@@ -81,7 +81,7 @@ The `results/` directory contains validated results from the paper:
 
 ## Hardware
 
-All experiments were run on a 128GB M4 Ultra MacBook Pro with Ollama. No cloud compute required.
+All experiments were run on a 128GB M4 Max MacBook Pro with Ollama. No cloud compute required.
 
 ## Citation
 
