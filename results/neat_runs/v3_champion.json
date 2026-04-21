@@ -1,0 +1,29 @@
+{
+  "fitness": 0.76,
+  "genome": {
+    "fitness": 0.76,
+    "total_iterations": 1.72,
+    "topology": "gen(qwen2.5) \u2192 exec(iters=3) \u2192 analyze(llama3.2) \u2192 refine(llama3.2)",
+    "generator": {
+      "model": "qwen2.5:1.5b",
+      "system_prompt": "You are a Python developer. Read the problem carefully, think about edge cases, then write a correct implementation. Output only the code.",
+      "temperature": 0.35
+    },
+    "stages": [
+      {
+        "innovation": 1,
+        "max_iterations": 3,
+        "analyzer": {
+          "model": "llama3.2:3b",
+          "system_prompt": "You are a code reviewer. Analyze the error traceback and failed tests. Identify the exact bug and describe the minimal change needed to fix it.",
+          "temperature": 0.48
+        },
+        "refiner": {
+          "model": "llama3.2:3b",
+          "system_prompt": "You are fixing a broken Python function. Read the error carefully, understand what went wrong, and rewrite the function to pass all tests. Output only the function code.",
+          "temperature": 0.15
+        }
+      }
+    ]
+  }
+}
